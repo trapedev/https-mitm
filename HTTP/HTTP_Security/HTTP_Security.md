@@ -21,6 +21,23 @@ CSP を有効にするには、ウェブサーバーから`Content-Security-Poli
 - `preload`（省略可能）
   > [詳細](https://hstspreload.org/)
 
+## X-XSS-Protection
+
+IE, Chrome, Safari の機能で、反射型クロスサイドスクリプティング（XSS）攻撃を検出した時に、ページの読み込みを停止する為のもの。強い`Content-Security-Policy`をサイトが実装して、インライン JS の使用をむこうにしていれば、現在のブラウザではこれらの防御は大枠で不要なものだが、まだ CSP に対応してない古いウェブブラウザを使用しているユーザーには防御になる。
+
+```
+・Chromeは削除した。
+・FireFoxは対応してない（今後も実装しない）。
+・EdgeはXSSファイルを廃止
+```
+
+- 0
+  > XSS フィルタリングの無効化
+- 1
+  > XSS フィルタリングの有効化
+- 1; mode=block
+- 1; report=`<reporting-URL>`
+
 ## 参考文献・サイト
 
 - [コンテンツセキュリティポリシー (CSP)](https://developer.mozilla.org/ja/docs/Web/HTTP/CSP)
