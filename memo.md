@@ -46,3 +46,22 @@
   > etc.
 
 ## これまでの案
+
+## その他参考文献・サイト
+
+- [～誰かの失敗を他山の石に～脆弱性事例に学ぶセキュアコーディング「SSL/TLS 証明書検証」編](https://www.jpcert.or.jp/present/2014/20141108SSLTLS-vul.pdf)
+  > 2014 年
+  >
+  > 名前検証の不備により事例が書かれている。
+- [New Tricks For Defeating SSL In Practice](https://blackhat.com/presentations/bh-europe-09/Marlinspike/blackhat-europe-2009-marlinspike-sslstrip-slides.pdf)
+  > 2009 年
+  >
+  > blackhat で紹介された ssl-strip 攻撃を利用した mitm の手法が紹介されている。既に対策されている。
+- [iOS 実機の SSL 通信をプロキシによって傍受したり改ざんする方法](https://qiita.com/yimajo/items/c67cb711851f747c35e5)
+  > 2014 年 2 月 21 日
+  >
+  > `「OS XからiPhoneへこの証明書をメール送信し、iPhone側のメールクライアントから証明書を開くことでインストールすることが可能」`の部分から、証明書をスマホデバイスにインストールすることが可能であることが分かる。これをアプリの内部で実行できたりしないだろうか...。
+- [HSTS による対策を回避可能な sslstrip 攻撃](https://www.sci.kanagawa-u.ac.jp/info/matsuo/pub/pdf/IPSJCSS2016107.pdf)
+  > 2016 年 10 月 13 日
+  >
+  > 前提条件的に、今これを適用させるのは厳しい。
