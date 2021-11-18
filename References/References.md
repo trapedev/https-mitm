@@ -8,6 +8,16 @@
 - [mitmproxy で通信を見る](https://note.com/tanjoin/n/n6dd5f9322a6c)
 - [PlanningPME API](https://www.planningpme.com/planningpme-api.htm)
   > API について分かりやすく書かれている
+- [コンテンツセキュリティポリシー (CSP)](https://developer.mozilla.org/ja/docs/Web/HTTP/CSP)
+- [CSP: upgrade-insecure-requests](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests)
+- [If-Modified-Since](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/If-Modified-Since)
+- [Cache-Control](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Cache-Control)
+- [Location](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Location)
+- [正規表現で置換: re.sub, re.subn](https://note.nkmk.me/python-str-replace-translate-re-sub/)
+
+## Python 関連
+
+- [re.search() で正規表現を用いて文字列を検索](https://uxmilk.jp/8683)
 
 ## トラブルシューティング関連
 
