@@ -1,4 +1,4 @@
-# HTTPS の中間者攻撃の新手法について
+# HTTPS の中間者攻撃と、その新手法についての研究
 
 ## 前提条件
 
@@ -62,6 +62,16 @@
   >
   > `「OS XからiPhoneへこの証明書をメール送信し、iPhone側のメールクライアントから証明書を開くことでインストールすることが可能」`の部分から、証明書をスマホデバイスにインストールすることが可能であることが分かる。これをアプリの内部で実行できたりしないだろうか...。
 - [HSTS による対策を回避可能な sslstrip 攻撃](https://www.sci.kanagawa-u.ac.jp/info/matsuo/pub/pdf/IPSJCSS2016107.pdf)
+
   > 2016 年 10 月 13 日
   >
   > 前提条件的に、今これを適用させるのは厳しい。
+
+- [HSTS – A Trivial Response to sslstrip](https://www.secplicity.org/2019/11/05/hsts-a-trivial-response-to-sslstrip/)
+
+  > 2019 年 11 月 5 日
+  >
+  > `HSTS`について書かれている比較的新しい記事
+
+- [TLS 復号化](https://wiki.wireshark.org/TLS)
+  >
