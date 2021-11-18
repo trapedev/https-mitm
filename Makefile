@@ -4,9 +4,9 @@ all:
 	git commit -m "commit all file change"
 	git push origin HEAD
 
-mm:
-	@ echo "Now... pushing memo.md to github :)"
-	git add .\memo.md
+rm:
+	@ echo "Now... pushing README.md to github :)"
+	git add .\README.md
 	git commit -m "postscript"
 	git push origin HEAD
 
