@@ -1,3 +1,8 @@
+all:
+	git add .
+	git commit -m "commit all file change"
+	git push origin HEAD
+
 memo:
 	git add .\memo.md
 	git commit -m "postscript"
