@@ -71,7 +71,27 @@
 
   > 2019 年 11 月 5 日
   >
-  > `HSTS`について書かれている比較的新しい記事
+  > `HSTS`について書かれている比較的新しい記事。
 
 - [TLS 復号化](https://wiki.wireshark.org/TLS)
+
+  > 2020 年 5 月 20 日
   >
+  > `Wireshark`の`TLS`復号について。
+
+- [フリー Wi-Fi に接続したらサイトに接続できない場合の話](https://blog.anoncom.net/2020/08/what-happens-when-you-connect-to-free-Wi-Fi-and-cant-connect-to-the-web.html)
+
+  > 2020 年 8 月 30 日
+  >
+  > 常時`https`通信だと`Captive Portal`できないという話。
+
+- [SSL/TLS and captive portals](https://www.ssltrust.com/blog/ssl-tls-captive-portals)
+
+  > 2021 年 11 月 1 日
+  >
+  > `SSL/TLS`と`Captive Portal`に関連する話題。
+
+- [Command Injection](https://book.hacktricks.xyz/pentesting-web/command-injection)
+  > 2021 年 7 月
+  >
+  > `Command Injection`攻撃に関する`Hack Trick`の記事。コマンドインジェクション攻撃の案は廃案になった。
