@@ -14,4 +14,4 @@
 
 ## 考察
 
-- `前提条件2.`より、`SSL/TLS`証明書の問題を突破/回避する必要があるが、`HSTS`の普及により、既存の`SSLStrip`ツールは無効となっている。
+- [前提条件](https://github.com/KeiTaylor0606/https-mitm/blob/main/memo.md#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6)の`2`より、`SSL/TLS`証明書の問題を突破/回避する必要があるが、`HSTS`の普及により、既存の`SSLStrip`ツールは無効となっている。
