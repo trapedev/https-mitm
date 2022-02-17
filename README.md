@@ -20,7 +20,7 @@
 
 ## 考察
 
-1. [前提条件](https://github.com/KeiTaylor0606/https-mitm/blob/main/memo.md#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6)の`2`より、`SSL/TLS`証明書の問題を突破/回避する必要があるが、[`HSTS`](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Strict-Transport-Security)の普及により、既存の[`SSLStrip`](https://www.venafi.com/blog/what-are-ssl-stripping-attacks)ツールは無効となっている。
+1. [前提条件](https://github.com/KeiTaylor0606/https-mitm#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6)の`2`より、`SSL/TLS`証明書の問題を突破/回避する必要があるが、[`HSTS`](https://developer.mozilla.org/ja/docs/Web/HTTP/Headers/Strict-Transport-Security)の普及により、既存の[`SSLStrip`](https://www.venafi.com/blog/what-are-ssl-stripping-attacks)ツールは無効となっている。
 2. `SSL/TLS`証明書の問題の突破/回避は難しい。
 
    > 理由は以下の通り
