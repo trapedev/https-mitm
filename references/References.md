@@ -1,4 +1,5 @@
 # その他参考文献・サイト
+- [2020年に向け全国約３万箇所のWi-Fi整備を目指して](https://www.soumu.go.jp/main_content/000548781.pdf)
 
 ## 用語関連
 
