@@ -17,19 +17,39 @@
     \end{abstract}
     \tableofcontents
     \clearpage
-    \section{背景}
-    
-    \section{目的}
-    偽のSSIDを用いた公衆無線LANからクライアントと正規サーバとの通信に割り込み，デバイスに警告を出さずに通信の傍受・改竄を行う事が主な目的である．
-    \section{前提知識}
+    \section{動機}
+
+    \section{前提知識・用語}
+    本稿を進めるにあたり，必要であると思われる前提知識及び用語を以下に記す．
+    \subsection{通信関連について}
+    \begin{description}
+        \item[HTTP]\mbox{}\\
+        \item[HTTPS]\mbox{}\\
+        \item[サーバ]\mbox{}\\ 
+        \item[中間者攻撃（man-in-the-middle attack）]\mbox{}\\ 
+    \end{description}
     \subsection{無線LAN関連について}
     \begin{description}
         \item [SSID]\mbox{}\\
             Service Set Identifierの略で，無線LANの識別子を指す．
         \item [Captive Portal]\mbox{}\\
-            無線及び有線ネットワークに接続したユーザーが，ネットワークへのアクセスを許可される前に表示されるWebページを指す．\\
+            無線及び有線ネットワークに接続したユーザーが，ネットワークへのアクセスを許可される前に表示されるWebページを指す．\
             ユーザーは，アクセス許可に必要な情報の入力或いは利用規約への同意を行い，その認証を行ってもらう事でインターネットへのアクセスが可能になる．
     \end{description}
+    \subsection{その他}
+    \begin{description}
+        \item[HTML]\mbox{}\\
+        \item[ハイパーリンク]\mbox{}\\  
+    \end{description}
+    \section{目標}
+    本研究の目標を以下に示す．
+    \begin{quote}
+        偽のSSIDを用いた公衆無線LANからクライアントと正規サーバとの通信に割り込み，デバイスに警告を出さずに通信の傍受・改竄を行う事．\
+    \end{quote}
+    デバイスに警告を出さないという点について，ここではHTTPS通信を想定する．\
+    通常，ユーザーが利用するブラウザでは，その通信先が正規のもの，つまり第三者が複製した偽物のサイトではないことを確認する為に，名前検証を行う．\
+    名前検証とは，通信のドメインとSSL証明書に記載されているドメインが一致しているかの確認を行う事であるが，この時用いられるSSL証明書を第三者が複製・改竄することは非常に困難とされている．\
+    （ここからなんて書こう．．．）
     \section{前提条件と仮説}
     \subsection{前提条件}
     今回，MITM攻撃を仕掛けるにあたり以下の前提条件を設ける．\\
@@ -92,6 +112,6 @@
     \subsection{Amazonの場合}
 
     \section{考察}
-    
+    今回の結果から，
     \section{参考文献・サイト}
 \end{document}
