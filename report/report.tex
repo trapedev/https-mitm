@@ -1,6 +1,7 @@
 \documentclass[dvipdfmx]{jsarticle}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{url}
 \title{公衆無線LANを用いたHTTPS通信に対する\\MITM攻撃の新手法の開発とその実装}
 \author{
     著者\\
@@ -15,22 +16,49 @@
 \begin{document}
     \maketitle
     \begin{abstract}
-        　昨今のネットワークの著しい普及により，屋外で利用できるネットワークの需要が拡大している．\
+        　昨今のインターネットの著しい普及により，屋外で利用できるネットワークの需要が拡大している．\
         その需要に応える通信インフラとして公衆無線LANがあり，公共のあらゆる場でその整備が進んでいる．\
         しかし，セキュリティ面での懸念は以前として残っている．\
         利用した公衆無線LANが通信の傍受を目的とした悪性のものである可能性は，その懸念の一例である．
         屋外で手軽にインターネットを利用できる反面，ユーザーたちはその公衆無線LANの提供元を確認することはほとんどないだろう．\
-        近年は通信内容が暗号化されたHTTPS通信が主流になり，中間者攻撃も簡単に実行できないが，公衆無線LANを利用した通信の場合はそれが可能になる場合がある．\
+        近年は通信内容が暗号化されたHTTPS通信が主流になり，中間者攻撃対する対策も行われているは，公衆無線LANを利用した通信の場合はそれが容易に可能になる場合がある．\
         本稿では，主にその手法と具体的な検証結果について記す．
         \newline
     \end{abstract}
     \tableofcontents
     \clearpage
     \section{序論}
-
+        　スマートフォンの普及に伴い，屋外の快適なネットワーク環境の需要が高まっている．\
+        その具体的なインフラとして，公衆無線LANがある．\
+        現在では，公衆無線LANは日常の様々な側面に溶け込んでいる．\
+        その一部の例として，新幹線や飛行機，カフェや宿泊施設など，日常生活に欠かせない施設が挙げられる．\
+        総務省は，災害時の情報袖手や通信手段として，また観光情報の収集や教育現場での活用による利便性の向上を目指し，平成30年までの全国3万箇所に公衆無線LANを設置する案をまとめた\cite{SoumuWiFi}．\\
+        　このように，公衆無線LANの普及が加速的に行われている中，そのセキュリティ対策も課題となっている．\
+        特に，公衆無線LANには多くの脅威が未だ潜んでおり，IPA（独立行政法人情報処理推進機構）による「公衆無線LAN利用に係る脅威と対策～公衆無線LANを安全に利用するために～」の資料\cite{IPA}には，主に以下の4つの脅威が示されている．\
+        \begin{enumerate}
+            \item 盗聴
+            \item なりすまし
+            \item 悪意のAP（AP:アクセスポイント）
+            \item 不正目的でのインフラの利用
+        \end{enumerate}
+        「盗聴」とは，無線通信の傍受・窃用を意味するが，公衆無線LANの様なアクセスに必要な情報が不特定多数の利用者に共有された状態の場合，たとえ暗号化された通信でも，その復号に必要な情報を得る事が可能なため，通信内容の盗聴の脅威が十分にある．\
+        「なりすまし」とは，MACアドレスの偽造により，本来接続できない端末に，第三者が接続・操作することを指す．\
+        この行為は，MACアドレスを登録した端末とのみ無線通信を行うMACアドレスフィルタリングという機能を利用することで可能になる．\
+        「悪意のAP」とは，第三者が悪意ある目的で設置されたアクセスポイントを指す．\
+        この場合，利用者が正規のアクセスポイントと誤認して悪意あるアクセスポイントを利用した場合，個人情報などの機密性・重要性の高い情報が抜き取られるという脅威がある．\
+        「不正目的でのインフラの利用」とは，例えばユーザーの認証を行わないような公衆無線LANの場合，利用者の特定が困難さを逆手に取ったサービスの不正利用を行うインフラと化してしまう．\
+        このように，公衆無線LANには様々な脅威が潜んでおり，その対策は現在も大きな課題となっている．\\
+        　本研究では，上記の4つの脅威の中で，「悪意あるAP」の脅威について調べた．\
+        具体的には，実際に攻撃目的の公衆無線LANアクセスポイントを用意して，クライアントとサーバの通信の中継を行うシステムの実装及び開発を行い．その可能性を検証した.\
+        想定するアクセスポイントの利用者は，一般的な利用者，つまりインターネットや通信・セキュリティに関する専門的知識を有さない利用者とし，通信を中継する起点は，攻撃者が用意したアクセスポイントと共に，Captive Portalという仕組みを利用した．\
+        Captive Portalとは，ユーザーが該当のアクセスポイントを通してインターネットへの接続を試みた場合，そのユーザーの認証を行う為に強制的に認証ページに飛ばして認証を行わせる仕組みを指す．\
+        公衆無線LANにアクセスした際に，突然ブラウザが開き，認証を求められる場面に遭遇したことがあると思うが，これがCaptive Portalに該当する．\
+        通常，認証が成功・終了すれば元の画面に戻るが，アクセスポイントの提供元によっては自社のWebサイトなどに自動的に遷移するように設定されているものもある．\
+        本研究は，このCaptive Portalの仕組みを起点として，認証後に偽の検索エンジンに誘導させる事で通信の中継機会を作り，ターゲットをメジャーな通販サイトに絞って，その個人情報の傍受・窃取を成功させた．\
+        加えて，その傍受・窃取を行うシステムに対しての可能性と課題の評価を行うと共に，公衆無線LANを起点とした個人情報漏洩の危険性について論じた．\
     \section{前提知識・用語}
         本稿を進めるにあたり，必要であると思われる前提知識及び用語を以下に記す．\
-        \subsection{通信関連について}
+        \subsection{通信プロトコルとそれに対する攻撃手法}
             \begin{description}
                 \item[HTTP]\mbox{}\\
                     　Hypertext Transfer Protocolの略であり，主にブラウザとサーバ間でWeb情報のやりとりを目的としたアプリケーション層プロトコルを指す．\
@@ -187,37 +215,48 @@
             検証結果は以下のようになった．
             \subsection{楽天の場合}
                 \subsubsection{動作結果}
+                    まず，認証画面への遷移であるが，
                     \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-00.png}
                         \caption{認証画面}
                         \label{rakuten-00}
                     \end{figure}
+                    認証が終了すると，偽の検索エンジンが表示される（\ref{rakuten-01}）．\
+                    ここの検索欄に「楽天通販」と検索して，その検索結果を待つ．\
                     \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-01.png}
                         \caption{偽のGoogle検索画面}
                         \label{rakuten-01}
                     \end{figure}
+                    「楽天通販」と検索して得られた結果を表示する．\
                     \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-02.png}
                         \caption{「楽天通販」と検索した際の画面}
                         \label{rakuten-02}
                     \end{figure}
+                    得られて検索結果の画面から，楽天通販サイトに入る．\
+                    ここで，個人アカウントに入る為に「ログイン」ボタンを押す．
                     \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-03.png}
                         \caption{検索結果の画面から楽天の複製サイトへ侵入した際の画面}
                         \label{rakuten-03}
                     \end{figure}
+                    「ログイン」ボタンを押した結果は以下のようになる．\
+                    このログイン画面は，攻撃が予め用意して攻撃者サーバにパラメータを送信させるように実装されたものである．\
+                    ここに，実際に自分のアカウント情報を入力し，「ログイン」ボタンを押す．\
                     \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-04.png}
                         \caption{ログイン画面へ入り，登録情報を入力した際の画面}
                         \label{rakuten-04}
                     \end{figure}
-                    \begin{figure}[h]
+                    入力されたパラメータを攻撃者サーバ内から処理をし，正規サーバから返却された結果を被害者に提示する．\
+                    図\ref{rakuten-05}は，実際に個人アカウントに侵入した結果である．\
+                    \begin{figure}[ht]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-05.png}
                         \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
@@ -233,7 +272,7 @@
                     Amazonの場合，場合によればCAPTCHAに引っかかりログイン画面を突破できない場合があるという問題点が挙げられる．\
                     CAPTCHAとは，自動化されたボットによるWebサイトの操作を防止するもので，例えば，人間は認識可能でボットには認識不可能な歪みを含んだ文字列を提示し，その文字列を入力させる事で人間かボットかを認識するようなものが挙げられる（\ref{captcha}）．\
                     今回の実装では，Cpatchaを回避或いはCAPTCHAの文字列を被害者に入力させて突破させる事はできなかった．\
-                    \begin{figure}[h]
+                    \begin{figure}[ht]
                         \centering
                         \includegraphics[height=7cm]{img/captcha.png}
                         \caption{CAPTCHAの例：AWSコンソールにログインする際に実際に出るCAPTCHAの一例}
@@ -243,9 +282,11 @@
             今回の結果から，
         \section{参考文献・サイト}
             \begin{thebibliography}{9}
+                \bibitem{SoumuWiFi} 総務省，2020年に向け全国約3万箇所のWi-Fi整備を目指して，\url{https://www.soumu.go.jp/main_content/000548781.pdf}
+                \bibitem{IPA} IPA，公衆無線LAN利用に係る脅威と対策　～公衆無線LANを安全に利用するために～，\url{https://www.ipa.go.jp/files/000051453.pdf}
                 \bibitem{AboutMITM} オライリージャパン，渋川きよし 著，Real World HTTP ―歴史とコードに学ぶインターネットとウェブ技術 第2班，14.4 中間者攻撃（MITM攻撃）
                 \bibitem{AboutHTML} Ohmsha，井上直哉・村山公保・竹下隆史・荒井透・苅田幸雄 共著，マスタリングTCP/IP 入門編 第6班，8.5.4 HTML(HyperText Markup Language)
-                \bibitem{Fishing} フィッシング対策協議会，2022年02 フィッシング報告状況，https://www.antiphishing.jp/report/monthly/202202.html
+                \bibitem{Fishing} フィッシング対策協議会，2022年02 フィッシング報告状況，\url{https://www.antiphishing.jp/report/monthly/202202.html}
             \end{thebibliography}
         
         \section{付録}
