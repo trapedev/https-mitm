@@ -15,7 +15,7 @@
 \begin{document}
     \maketitle
     \begin{abstract}
-        \ 昨今のネットワークの著しい普及により，屋外で利用できるネットワークの需要が拡大している．\
+        　昨今のネットワークの著しい普及により，屋外で利用できるネットワークの需要が拡大している．\
         その需要に応える通信インフラとして公衆無線LANがあり，公共のあらゆる場でその整備が進んでいる．\
         しかし，セキュリティ面での懸念は以前として残っている．\
         利用した公衆無線LANが通信の傍受を目的とした悪性のものである可能性は，その懸念の一例である．
@@ -187,6 +187,43 @@
             検証結果は以下のようになった．
             \subsection{楽天の場合}
                 \subsubsection{動作結果}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-00.png}
+                        \caption{認証画面}
+                        \label{rakuten-00}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-01.png}
+                        \caption{偽のGoogle検索画面}
+                        \label{rakuten-01}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-02.png}
+                        \caption{「楽天通販」と検索した際の画面}
+                        \label{rakuten-02}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-03.png}
+                        \caption{検索結果の画面から楽天の複製サイトへ侵入した際の画面}
+                        \label{rakuten-03}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-04.png}
+                        \caption{ログイン画面へ入り，登録情報を入力した際の画面}
+                        \label{rakuten-04}
+                    \end{figure}
+                    \begin{figure}[h]
+                        \centering
+                        \includegraphics[width=15cm]{img/rakuten/rakuten-05.png}
+                        \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
+                        \label{rakuten-05}
+                    \end{figure}
+                    \clearpage
                 \subsubsection{問題点}
                     楽天の場合の主な問題点として，ログイン情報の入力から実際にログインが完了されるまで，ある程度の時間を要する事が挙げられる．\
                     
@@ -210,6 +247,7 @@
                 \bibitem{AboutHTML} Ohmsha，井上直哉・村山公保・竹下隆史・荒井透・苅田幸雄 共著，マスタリングTCP/IP 入門編 第6班，8.5.4 HTML(HyperText Markup Language)
                 \bibitem{Fishing} フィッシング対策協議会，2022年02 フィッシング報告状況，https://www.antiphishing.jp/report/monthly/202202.html
             \end{thebibliography}
+        
         \section{付録}
             \subsection{実装コード}
                 実装コードのGitHubリポジトリ　　https://github.com/ES3-Kobe-U/go-malproxy
