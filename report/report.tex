@@ -2,7 +2,16 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \title{公衆無線LANを用いたHTTPS通信に対する\\MITM攻撃の新手法の開発とその実装}
-\author{神戸大学工学部電気電子工学科 木村圭一朗}
+\author{
+    著者\\
+    神戸大学工学部電気電子工学科\\
+    学籍番号 1914320T\\
+    木村圭一朗\\
+    \\
+    指導教員\\
+    森井 昌克 教授\\
+    白石 善明 准教授\\
+}
 \begin{document}
     \maketitle
     \begin{abstract}
@@ -101,9 +110,9 @@
         \subsection{検証フロー}
             主な検証フローは次の通り．各フェースの具体的な説明は次のサブセクションに記述している．
             \begin{enumerate}
-                \item CaptivePortalを検知させて，予め攻撃者が用意しておいたCaptive Portalサイトに誘導させる．
-                \item Captive Portalサイトで表示された偽の検索エンジンから，被害者が検索したワードを悪性サーバで取得する．
-                \item 攻撃者は取得したワードをバックエンドで検索し，その検索結果を取得．
+                \item CaptivePortalを検知させて，予め攻撃者が用意しておいたCaptive Portalサイトに誘導し，認証を行わせる．
+                \item 認証後，偽の検索エンジンの画面へ遷移させ，被害者が検索したワードを悪性サーバで取得する．
+                \item 攻撃者は取得したワードをバックエンドで検索し，その検索結果を取得する．
                 \item 取得したHTMLファイル内にあるハイパーリンクを書き換え，そのコピーを被害者に提示する．
                 \item 以後，クリックしたURLを悪性サーバで取得する．
                 \item 攻撃者は取得したURLを利用して正規サーバにアクセスする．
@@ -111,7 +120,7 @@
             \end{enumerate}
         \subsection{実装}
             悪性サーバの実装はGolangで実装した．\
-            以下に該当のGitHubリポジトリのリンクを載せている．\
+            付録に該当のGitHubリポジトリのリンクを載せている．\
             ここでは，検証フローの内容について具体的な実装内容を示す．\
             \subsubsection{検証フロー1,2について}
                 前提知識・用語のセクションでも記述したが，Captive Portalとは，インターネットを利用する際にそのユーザーの認証や利用規約に同意させる為に，一時的に外部との通信を制限して認証画面に飛ばす仕組み，或いはその認証ページを指す．\
@@ -159,7 +168,7 @@
                 通常の通信であればHTMLファイルの取得のみでよいが，個人アカウントへのログインを行う際は，そのIDとパスワードを取得し且つ得られた情報と実際に登録されている情報との整合性の確認を行わなければならない．\
                 登録情報の整合性に関しては，取得した個人情報を攻撃者が手動で入力・確認を行わず，バックエンドでブラウザのインスタンスを生成して入力・確認を行う．\
                 この処理に関して，ChromedpというGolangで実装されているパッケージを用いた．\
-                具体的な実装についてはGitHubレポジトリを参照して頂きたい．ここでは，処理の流れを以下に簡単に示す．\
+                具体的な実装については付録からGitHubレポジトリを参照して頂きたい．ここでは，処理の流れを以下に簡単に示す．\
                 \begin{enumerate}
                     \item Chromeインスタンスを生成する．
                     \item 指定URLを叩き，JS Pathを指定して該当部分に取得したIDやパスワードを入力する．
@@ -197,8 +206,11 @@
             今回の結果から，
         \section{参考文献・サイト}
             \begin{thebibliography}{9}
+                \bibitem{AboutMITM} オライリージャパン，渋川きよし 著，Real World HTTP ―歴史とコードに学ぶインターネットとウェブ技術 第2班，14.4 中間者攻撃（MITM攻撃）
                 \bibitem{AboutHTML} Ohmsha，井上直哉・村山公保・竹下隆史・荒井透・苅田幸雄 共著，マスタリングTCP/IP 入門編 第6班，8.5.4 HTML(HyperText Markup Language)
                 \bibitem{Fishing} フィッシング対策協議会，2022年02 フィッシング報告状況，https://www.antiphishing.jp/report/monthly/202202.html
-                \bibitem{AboutMITM} オライリージャパン，渋川きよし 著，Real World HTTP ―歴史とコードに学ぶインターネットとウェブ技術 第2班，14.4 中間者攻撃（MITM攻撃）
             \end{thebibliography}
+        \section{付録}
+            \subsection{実装コード}
+                実装コードのGitHubリポジトリ　　https://github.com/ES3-Kobe-U/go-malproxy
 \end{document}
