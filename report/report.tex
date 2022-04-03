@@ -103,7 +103,7 @@
     \section{目標}
         本研究の目標を以下に示す．
         \begin{quote}
-            偽のSSIDを用いた公衆無線LANからクライアントと正規サーバとの通信に割り込み，ブラウザに警告を出さずに通信の傍受・改竄を行う事．\
+            偽のSSIDを用いた公衆無線LANからクライアントと正規サーバとの通信に割り込み，ブラウザに警告を出さずに通信の傍受・窃取を行う事．\
         \end{quote}
     \section{前提条件と仮説}
         \subsection{前提条件}
@@ -117,11 +117,11 @@
             \end{itemize}
             　まず，偽SSIDを有するAPを利用するという前提条件について説明する．\
             攻撃者が利用者の通信の内容を盗み見る為には，利用者を攻撃者が用意したAPへ接続させる必要がある．\
-            しかし，通常の公衆のAPのSSIDは提供している施設や会社の名前に関連したものが多く，利用者も提供元の名前に関連したSSIDを有するAPに接続を試みる．\
+            しかし，通常の公衆のAPのSSIDは，それを提供している施設や会社の名前に関連したものが多く，利用者も提供元の名前に関連したSSIDを有するAPに接続を試みる．\
             従って，攻撃者が用意したAPのSSIDも，利用者が施設や会社が提供したWiFiであると誤認させる様なSSIDを用いるという前提が必要である．\\
-            　次に，利用者はHTTPS通信でサイトを利用するという条件について，これは現在のWebサイト，特に個人情報などのセンシティブな情報を扱うようなWebサイトは常時HTTPS通信を用いている点にある．\
-            特に，中間者攻撃への対抗策としてHSTP(HTTP Strict Transport Security)という，サーバーがブラウザに対してHTTPS通信を強制する様な仕組みも実装されているものもある．\
-            従って，通信内容に対して暗号化が施されていないHTTP通信を前提としての検証は現実的出ない為，HTTPS通信を想定する必要がある．\\
+            　次に，利用者はHTTPS通信でサイトを利用するという条件について，これは現在のWebサイト，特に個人情報やクレジットカード番号など機密性・重要性の極めて高い情報を扱うようなWebサイトは，常時HTTPS通信を用いている点にある．\
+            特に，中間者攻撃への対抗策としてHSTP(HTTP Strict Transport Security)という，サーバーがブラウザに対してHTTPS通信を強制する様な仕組みが実装されているものもある．\
+            従って，通信内容に対して暗号化が施されていないHTTP通信を前提としての検証は現実的でない為，HTTPS通信を想定する必要がある．\\
             　最後に，通信先を確認しないという前提についてであるが，これは一般的な利用者の想定を意味する．\
             通常，ネットワークについての知識が深い利用者や，セキュリティリテラシーの高い利用者は，閲覧しているサイトのドメインなどを確認して，正規サーバと通信しているかを確認する事があるが，一般的な利用者はそのような確認は行わない．\
             本研究は公衆無線LANを用いる一般的な利用者を想定している為，通信先の確認は想定しない．\\
@@ -256,7 +256,7 @@
                     \end{figure}
                     入力されたパラメータを攻撃者サーバ内から処理をし，正規サーバから返却された結果を被害者に提示する．\
                     図\ref{rakuten-05}は，実際に個人アカウントに侵入した結果である．\
-                    \begin{figure}[ht]
+                    \begin{figure}[pth]
                         \centering
                         \includegraphics[width=15cm]{img/rakuten/rakuten-05.png}
                         \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
@@ -268,17 +268,42 @@
                     
             \subsection{Amazonの場合}
                 \subsubsection{動作結果}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/amazon/amazon-00.png}
+                        \caption{「Amazon通販」と検索した際の画面}
+                        \label{amazon-00}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/amazon/amazon-01.png}
+                        \caption{検索結果の画面からAmazonの複製サイトへ侵入した際の画面}
+                        \label{amazon-01}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/amazon/amazon-02.png}
+                        \caption{ログイン画面へ入り，登録情報を入力した際の画面}
+                        \label{amazon-02}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[width=15cm]{img/amazon/amazon-03.png}
+                        \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
+                        \label{amazon-03}
+                    \end{figure}
                 \subsubsection{問題点}
                     Amazonの場合，場合によればCAPTCHAに引っかかりログイン画面を突破できない場合があるという問題点が挙げられる．\
                     CAPTCHAとは，自動化されたボットによるWebサイトの操作を防止するもので，例えば，人間は認識可能でボットには認識不可能な歪みを含んだ文字列を提示し，その文字列を入力させる事で人間かボットかを認識するようなものが挙げられる（\ref{captcha}）．\
                     今回の実装では，Cpatchaを回避或いはCAPTCHAの文字列を被害者に入力させて突破させる事はできなかった．\
-                    \begin{figure}[ht]
+                    \begin{figure}[pth]
                         \centering
                         \includegraphics[height=7cm]{img/captcha.png}
                         \caption{CAPTCHAの例：AWSコンソールにログインする際に実際に出るCAPTCHAの一例}
                         \label{captcha}
                     \end{figure}
-        \section{考察}
+        \section{システムの評価}
+        \section{セキュリティ対策に関する考察}
             今回の結果から，
         \section{参考文献・サイト}
             \begin{thebibliography}{9}
