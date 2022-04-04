@@ -95,7 +95,7 @@
                     その実状は，公式のリンクと偽って偽のサイトへの遷移を促し，機密情報を盗もうとするフィッシングの被害が今もなお絶えない点から伺える（\ref{fishing}, \cite{Fishing}）．\
                     \begin{figure}[h]
                         \centering
-                        \includegraphics[width=15cm]{img/fishing.png}
+                        \includegraphics[width=12cm]{img/fishing.png}
                         \caption{2021年3月から2022年2月までのフィッシング報告件数 引用：フィッシング対策協議会}
                         \label{fishing}
                     \end{figure}
@@ -171,7 +171,7 @@
                 今回はこの仕組みを利用する（図\ref{flow-no12}）．\
                 \begin{figure}[pth]
                     \centering
-                    \includegraphics[width=15cm]{img/vc-vf-1-2.png}
+                    \includegraphics[width=12cm]{img/vc-vf-1-2.png}
                     \caption{偽のAPとCaptive Portalの仕組みを仕様して，偽の検索エンジンに飛ばすまでの挙動}
                     \label{flow-no12}
                 \end{figure}
@@ -184,7 +184,7 @@
                 このURLを叩くことで，正規サーバからの応答を取得・自動生成を行う(図\ref{flow-no3})．\\
                 \begin{figure}[pth]
                     \centering
-                    \includegraphics[width=15cm]{img/vc-vf-3.png}
+                    \includegraphics[width=12cm]{img/vc-vf-3.png}
                     \caption{検索ワードを取得してから，検索結果を取得するまでの流れ}
                     \label{flow-no3} 
                 \end{figure}
@@ -197,12 +197,12 @@
                 サーバには予め，URLを受け取る為のエンドポイントを設置する．今回の場合は「/templates」というエンドポイントに対して，「url」というパラメータを受け取るものとする．\
                 このエンドポイントに対して適切にURLを飛ばすために，サーバ側で予め/templates?url=https://example.comのように書き換える．\
                 その結果，被害者に提示したHTMLファイル内にあるハイパーリンクをクリックすると悪性サーバに飛び，且つサーバ側で遷移しようとしたページのリンクを取得できる（図\ref{flow-no45-01}）．
-                \begin{figure}
+                \begin{figure}[pth]
                     \centering
-                    \includegraphics[width=15cm]{img/vc-vf-4-5-00.png}
+                    \includegraphics[width=12cm]{img/vc-vf-4-5-00.png}
                     \caption{HTMLファイル内のハイパーリンクを書き換えなかった場合の挙動}
                     \label{flow-no45-00}
-                    \includegraphics[width=15cm]{img/vc-vf-4-5-01.png}
+                    \includegraphics[width=12cm]{img/vc-vf-4-5-01.png}
                     \caption{HTMLファイル内のハイパーリンクを書き換えた場合の挙動}
                     \label{flow-no45-01}
                 \end{figure}
@@ -222,7 +222,7 @@
                 JS Pathの指定に関しては，予め正規サイトのログイン画面を見てから確認・指定をする必要がある．\
                 \begin{figure}[pth]
                     \centering
-                    \includegraphics[width=15cm]{img/vc-vf-6-7.png}
+                    \includegraphics[width=12cm]{img/vc-vf-6-7.png}
                     \caption{登録情報の整合性の確認を行う流れ}
                     \label{flow-6-7}
                 \end{figure}
@@ -231,50 +231,57 @@
             検証結果は以下のようになった．
             \subsection{楽天の場合}
                 \subsubsection{動作結果}
-                    まず，認証画面への遷移であるが，
-                    \begin{figure}[pth]
-                        \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-00.png}
-                        \caption{認証画面}
-                        \label{rakuten-00}
-                    \end{figure}
-                    認証が終了すると，偽の検索エンジンが表示される（\ref{rakuten-01}）．\
+                    まず，認証画面への遷移し（図\ref{rakuten-00}），認証が終了すると偽の検索エンジンが表示される（\ref{rakuten-01}）．\
                     ここの検索欄に「楽天通販」と検索して，その検索結果を待つ．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-01.png}
+                        \includegraphics[height=7cm]{img/rakuten/rakuten-00.png}
+                        \caption{認証画面}
+                        \label{rakuten-00}
+                    \end{figure}
+                    \begin{figure}[pth]
+                        \centering
+                        \includegraphics[height=7cm]{img/rakuten/rakuten-01.png}
                         \caption{偽のGoogle検索画面}
                         \label{rakuten-01}
                     \end{figure}
-                    「楽天通販」と検索して得られた結果を表示する．\
+                    \clearpage
+                    「楽天通販」と検索して得られた結果を表示する（図\ref{rakuten-02}）．\
+                    ここで，被害者はGoogleの検索結果が得られたものと認識し，表示された楽天通販の結果から該当のサイトへのリンクをクリックする．\
+                    ここまでの動作は，図\ref{flow-no45-01}に準じて処理されたものである．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-02.png}
+                        \includegraphics[height=7cm]{img/rakuten/rakuten-02.png}
                         \caption{「楽天通販」と検索した際の画面}
                         \label{rakuten-02}
                     \end{figure}
-                    得られて検索結果の画面から，楽天通販サイトに入る．\
-                    ここで，個人アカウントに入る為に「ログイン」ボタンを押す．
+                    \\
+                    　得られて検索結果の画面から，楽天通販サイトに入る．\
+                    特に目立った文字化けや画像切れは起こっていない事から，ここまでも被害者は．楽天通販サイトに遷移したと認識する物とする．\
+                    ここで，個人アカウントに入る為に「ログイン」ボタンを押す（図\ref{rakuten-03}）．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-03.png}
+                        \includegraphics[height=7cm]{img/rakuten/rakuten-03.png}
                         \caption{検索結果の画面から楽天の複製サイトへ侵入した際の画面}
                         \label{rakuten-03}
                     \end{figure}
-                    「ログイン」ボタンを押した結果は以下のようになる．\
+                    \clearpage
+                    「ログイン」ボタンを押した結果は以下のようになる（図\ref{rakuten-04}）．\
                     このログイン画面は，攻撃が予め用意して攻撃者サーバにパラメータを送信させるように実装されたものである．\
                     ここに，実際に自分のアカウント情報を入力し，「ログイン」ボタンを押す．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-04.png}
+                        \includegraphics[height=7cm]{img/rakuten/rakuten-04.png}
                         \caption{ログイン画面へ入り，登録情報を入力した際の画面}
                         \label{rakuten-04}
                     \end{figure}
-                    入力されたパラメータを攻撃者サーバ内から処理をし，正規サーバから返却された結果を被害者に提示する．\
+                    \\
+                    　入力されたパラメータを攻撃者サーバ内から処理をし，正規サーバから返却された結果を被害者に提示する．\
                     図\ref{rakuten-05}は，実際に個人アカウントに侵入した結果である．\
+                    ここまでの動作は図\ref{flow-6-7}に準じて処理されており，目立った警告や画像切れ無く且つ正規サーバとの通信を中継する形で個人アカウントへのログインに成功した．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/rakuten/rakuten-05.png}
+                        \includegraphics[width=7cm]{img/rakuten/rakuten-05.png}
                         \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
                         \label{rakuten-05}
                     \end{figure}
@@ -282,13 +289,6 @@
                 \subsubsection{問題点}
                     楽天の場合の主な問題点として，ログイン情報の入力から実際にログインが完了されるまで，ある程度の時間を要する事が挙げられる．\
                     具体的な実行時間の結果を\ref{calc-run-time}に示す．\
-                    この原因は，主に二つ考えられる．\
-                    一つ目は，ログインのプロセスに複数の処理が絡んでいる点にある．\
-                    具体なプロセスは，図\ref{flow-6-7}に示すプロセスに加え，結果の出力と悪性サーバに通信するようにするためのURLの書き換えプロセスの含まれいてる．\
-                    しかし，書き換えプロセスにはさほど実行時間を要さない為，実行時間の長さはChromedpの一連の処理による部分が大きいと考えられる．\
-                    二つ目は，Chromedpからログイン結果を取得しようとした場合，最低でも13秒程度待機しなければ，ログイン後の画面のHTMLを確実に取得できない点にある．\
-                    これは，実装段階で待機秒数を決定する時に判明した．\
-                    今回はログイン後の画面を確実に取得する為に，デフォルトで13秒待機を設定している為，実行時間が必然的に長くなってしまっている．\
                     \begin{table}[pth]
                         \centering
                         \caption{Amazonと楽天の実行時間比較}
@@ -308,36 +308,59 @@
                         \end{tabular}
                         \label{calc-run-time}
                     \end{table}
+                    \\
+                    この原因は，主に二つ考えられる．\
+                    一つ目は，ログインのプロセスに複数の処理が絡んでいる点にある．\
+                    具体なプロセスは，図\ref{flow-6-7}に示すプロセスに加え，結果の出力と悪性サーバに通信するようにするためのURLの書き換えプロセスの含まれいてる．\
+                    しかし，書き換えプロセスにはさほど実行時間を要さない為，実行時間の長さはChromedpの一連の処理による部分が大きいと考えられる．\
+                    二つ目は，Chromedpからログイン結果を取得しようとした場合，最低でも13秒程度待機しなければ，ログイン後の画面のHTMLを確実に取得できない点にある．\
+                    これは，実装段階で待機秒数を決定する時に判明した．\
+                    今回はログイン後の画面を確実に取得する為に，デフォルトで13秒待機を設定している為，実行時間が必然的に長くなってしまっている．\
+                    \clearpage
             \subsection{Amazonの場合}
                 \subsubsection{動作結果}
+                    まず，図\ref{rakuten-00}と同様に悪性のAPにアクセスし，認証を終了させる．\
+                    続いて，図\ref{rakuten-01}のように偽のGoogle検索エンジンが表示された後，Amazon通販と入力し，検索結果を取得する（図\ref{amazon-00}）．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/amazon/amazon-00.png}
+                        \includegraphics[height=7cm]{img/amazon/amazon-00.png}
                         \caption{「Amazon通販」と検索した際の画面}
                         \label{amazon-00}
                     \end{figure}
+                    \\
+                    　取得した検索結果から複製されたAmazonの通販サイトに遷移した．\
+                    続いて，ログインを行う為に画面右上にあるログインボタンを押して個人アカウントへの侵入に試みた．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/amazon/amazon-01.png}
-                        \caption{検索結果の画面からAmazonの複製サイトへ侵入した際の画面}
+                        \includegraphics[height=7cm]{img/amazon/amazon-01.png}
+                        \caption{検索結果の画面からAmazonの複製サイトへ遷移した際の画面}
                         \label{amazon-01}
                     \end{figure}
+                    \clearpage
+                    　ログインボタンを押すと，ログイン画面に遷移した．\
+                    この画面は予め攻撃者側で作成したもので．入力フォームとその入力データの送信を悪性サーバ側で取得するようにしている．\
+                    この入力フォームに，実際にアカウント情報を入力してログインボタンを押した（図\ref{amazon-02}）．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/amazon/amazon-02.png}
+                        \includegraphics[height=7cm]{img/amazon/amazon-02.png}
                         \caption{ログイン画面へ入り，登録情報を入力した際の画面}
                         \label{amazon-02}
                     \end{figure}
+                    \\
+                    　入力情報をサーバ側で取得して，図\ref{flow-6-7}の手順に従い入力情報の処理を行った．\
+                    そして，入力情報の整合性の確認が完了し，実際に個人アカウントへの侵入に成功した．\
+                    図\ref{amazon-03}の右上には，実際に個人アカウントの名前が明記されていることが分かる．\
+                    ここまでの動作は図\ref{flow-6-7}の動作に準じて処理されたおり，楽天と同様に目立った画像切れや警告を出さずに，且つ正規サーバとの通信を攻撃者が中継する形で個人アカウントに侵入することができた．\
                     \begin{figure}[pth]
                         \centering
-                        \includegraphics[width=15cm]{img/amazon/amazon-03.png}
+                        \includegraphics[width=7cm]{img/amazon/amazon-03.png}
                         \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
                         \label{amazon-03}
                     \end{figure}
                     \clearpage
                 \subsubsection{問題点}
                     Amazonの場合，場合によればCAPTCHAに引っかかりログイン画面を突破できない場合があるという問題点が挙げられる．\
-                    CAPTCHAとは，自動化されたボットによるWebサイトの操作を防止するもので，例えば，人間は認識可能でボットには認識不可能な歪みを含んだ文字列を提示し，その文字列を入力させる事で人間かボットかを認識するようなものが挙げられる（\ref{captcha}）．\
+                    CAPTCHAとは，自動化されたボットによるWebサイトの操作を防止するもので，例えば，人間は認識可能でボットには認識不可能な歪みを含んだ文字列を提示し，その文字列を入力させる事で人間かボットかを認識するようなものが挙げられる（図\ref{captcha}）．\
                     今回の実装では，CAPTCHAを回避或いはCAPTCHAの文字列を被害者に入力させて突破させる事はできなかった．\
                     \begin{figure}[pth]
                         \centering
@@ -348,19 +371,28 @@
                     \clearpage
         \section{システムの評価}
             今回，「楽天」と「Amazon」の二つの通販サイトに絞ってシステムの構築を行ったが，両者ともブラウザ上での警告を出さずに個人情報の傍受・窃取が可能であることが分かった．\
-            しかし，いくつかの問題点も残されている．\
+            加えて，被害者のブラウザに対しても明確な警告の表示や画像切れが見れなかった為，通信の中継としての役割を十分に担う事ができていると評価できる．\\
+            　しかし，いくつかの問題点も残されている．\
             前節の検証結果でも述べたものを改めて列挙すると，次のようになる．\
             \begin{enumerate}
                 \item （楽天の場合）登録情報の整合性の確認にやや時間を要する点．
                 \item （Amazonの場合）CAPTCHAに引っかかり，ログインできない場合がある点．
-                \item （Amazonの場合）ログイン後の文字が英語になっている点（図\ref{amazon-03}）．
             \end{enumerate}
+            　まず1についてであるが，これは6.1.2問題点にも記述したように，Chromedpを利用して個人情報の整合性の確認を行う際に非常に時間を要している点が主な原因と考えられる．\
+            具体的な処理プロセスは，（1）Chromeインスタンスの作成，（2）ブラウザを開き楽天のログイン画面へ遷移，（3）指定のJS Pathを検索し個人情報を入力，（4）ログイン，（5）得られた結果をHTMLとして抽出，の計5行程となってるが．ログイン後の結果を完全に取得しようとした際，（4）と（5）の行程で約13秒程度待機する必要がある点が主なボトルネックとなっている．\
+            今後の課題としては，Chromedpに依存していない部分の実行時間の削減に加え，今回の処理が別の言語で実行できる場合，Golangの場合との実行時間の比較を行い，ボトルネックの解消の可能性を探る必要がある．\\
+            　続いて，2についてであるが，CAPTCHAに引っかかる主な原因は，個人情報をプログラムで入力している点が原因である．\
+            ブラウザ情報を維持したChromeインスタンスをCAPTCHAの回避を目的として再度別の処理で再利用する場合，Chromeインスタンスのリロードが必要となる．\
+            しかし，Chromeインスタンスのリロードはブラウザ画面のリロードと同様の挙動を示すため，その際にCHATCHAとして表示された文字列も変わってしまう．\
+            従って，被害者がCAPTCHAの文字列を入力したとしても，結果的に整合性が取れない．\
+            現在，このCAPTCHAの問題を解決する具体的な実装はできていない為，今後も回避方法を考えていく必要がある．\
         \section{セキュリティ対策に関する考察}
             今回の結果から，Captive Portalを起点とする事で，通信の中継及び個人情報などの機密性・重要性の高い情報の傍受・窃取が可能になる事が分かった．\
             公衆無線LANの整備が進み，その利用場面に出会う回数が増えるに従い，インターネット利用に際する認証要求の経験は，至極当たり前のUXとして溶け込んでいく可能性が高い．\
             つまり，本研究の様なCaptive Portalによる認証から，認証後に別のページへ遷移するというUXも，日常的な経験からそのAPが偽物であるという想定もされなくなる可能性があり，依然として公衆無線LANを起点としたセキュリティの脅威は無くならないと考えられる．\
             本節では，本研究の様なCaptive Portalを起点としたセキュリティの脅威に対する対策方法を列挙・考察する．\
             具体的な対策方法は次の様なものが列挙できる．\
+            \\
             \begin{enumerate}
                 \item[対策 1] APの提供元が正規のものか確認する．
                 \item[対策 2] 認証後のリダイレクトページからは，極力インターネットを利用しない．
