@@ -3,6 +3,7 @@
 \usepackage{latexsym}
 \usepackage{amsmath}
 \usepackage{url}
+\usepackage[margin=15truemm]{geometry}
 \begin{document}
     \title{SSL/TLSを回避する中間者攻撃の新たな提案とその脅威\\～実装による評価と考察～}
     \author{木村 圭一朗\thanks{神戸大学工学部電気電子工学科\\Department of Electrical and Electronic Engineering, Faculty of Engineering, Kobe University} \and 森井昌克\thanks{神戸大学大学院工学研究科\\Graduate School of Engineering, Kobe University} \and 白石善明\thanks{神戸大学大学院工学研究科\\Graduate School of Engineering, Kobe University}}
@@ -104,15 +105,15 @@
                 使用しているAPはCaptive Portalを実装している為，接続要求をした被害者デバイスに対して認証を行うように命じる．\
                 認証が終了すると，攻撃者が用意した悪性サーバに飛ばす．\
                 今回は，悪性サーバは偽の検索エンジンを装い，被害者はそれを疑うことなく用いるとする．\
-                \begin{figure*}[t]
+                \begin{figure}[t]
                     \centering
-                    \includegraphics[width=12cm]{img/vc-vf-1-2.png}
+                    \includegraphics[width=9cm]{img/vc-vf-1-2.png}
                     \caption{偽のAPとCaptive Portalの仕組みを仕様して，偽の検索エンジンに飛ばすまでの挙動}
                     \label{flow-no12}
-                    \includegraphics[width=12cm]{img/vc-vf-3.png}
+                    \includegraphics[width=9cm]{img/vc-vf-3.png}
                     \caption{検索ワードを取得してから，検索結果を取得するまでの流れ}
                     \label{flow-no3} 
-                \end{figure*}
+                \end{figure}
             \subsubsection{検証フロー3について}
                 ここでは，最も利用されているGoogleの検索エンジンを用いた．\
                 Googleでの検索結果を取得する為には，検索クエリを作成する必要がある．\
@@ -121,12 +122,24 @@
                 このURLを叩くことで，正規サーバからの応答を取得・自動生成を行う(図\ref{flow-no3})．\\
             \subsubsection{検証フロー4,5について}
                 取得したHTMLファイル内にあるハイパーリンクがそのままであれば，悪性サーバではなく正規サーバとの通信に切り替わってしまう（図\ref{flow-no45-00}）．\
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=9cm]{img/vc-vf-4-5-00.png}
+                    \caption{HTMLファイル内のハイパーリンクを書き換えなかった場合の挙動}
+                    \label{flow-no45-00}
+                \end{figure}
                 従って，既存のURLを悪性サーバへ通信するように書き換え，且つ既存のURLを正確に抽出する必要がある．\
                 これを実現する為には，既存のハイパーリンクをルールに則って書き換える必要がある．\
                 具体的に，https://example.comというURLに対して処理を行うことを考える．\
                 サーバには予め，URLを受け取る為のエンドポイントを設置する．今回の場合は「/templates」というエンドポイントに対して，「url」というパラメータを受け取るものとする．\
                 このエンドポイントに対して適切にURLを飛ばすために，サーバ側で予め/templates?url=https://example.comのように書き換える．\
                 その結果，被害者に提示したHTMLファイル内にあるハイパーリンクをクリックすると悪性サーバに飛び，且つサーバ側で遷移しようとしたページのリンクを取得できる（図\ref{flow-no45-01}）．
+                \begin{figure}[h]
+                    \centering
+                    \includegraphics[width=9cm]{img/vc-vf-4-5-01.png}
+                    \caption{HTMLファイル内のハイパーリンクを書き換えた場合の挙動}
+                    \label{flow-no45-01}
+                \end{figure}
             \subsubsection{検証フロー6,7について}
                 フローの4と5で得た正規URLを用いて，バックエンドで正規サーバとの通信及びHTMLファイルの取得を行う．\
                 通常の通信であればHTMLファイルの取得のみでよいが，個人アカウントへのログインを行う際は，そのIDとパスワードを取得し且つ得られた情報と実際に登録されている情報との整合性の確認を行わなければならない．\
@@ -140,20 +153,12 @@
                     \item 正規サーバに情報を整合させ，返却されたHTMLファイル内のハイパーリンクを，4と5と同じ要領で書き換えて被害者に返却する．
                 \end{enumerate}
                 JS Pathの指定に関しては，予め正規サイトのログイン画面を見てから確認・指定をする必要がある．\
-                \clearpage
-                \begin{figure*}[t]
+                \begin{figure}[t]
                     \centering
-                    \includegraphics[width=12cm]{img/vc-vf-4-5-00.png}
-                    \caption{HTMLファイル内のハイパーリンクを書き換えなかった場合の挙動}
-                    \label{flow-no45-00}
-                    \includegraphics[width=12cm]{img/vc-vf-4-5-01.png}
-                    \caption{HTMLファイル内のハイパーリンクを書き換えた場合の挙動}
-                    \label{flow-no45-01}
-                    \includegraphics[width=12cm]{img/vc-vf-6-7.png}
+                    \includegraphics[width=8cm]{img/vc-vf-6-7.png}
                     \caption{登録情報の整合性の確認を行う流れ}
                     \label{flow-6-7}
-                \end{figure*}
-                \clearpage
+                \end{figure}
     \section{システム評価}
         \subsection{楽天の場合}
             \subsubsection{動作結果}
@@ -164,13 +169,13 @@
                 ここまでの動作は，図\ref{flow-no45-01}に準じて処理されたものである．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-00.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-00.png}
                     \caption{認証画面}
                     \label{rakuten-00}
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-01.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-01.png}
                     \caption{偽のGoogle検索画面}
                     \label{rakuten-01}
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-02.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-02.png}
                     \caption{「楽天通販」と検索した際の画面}
                     \label{rakuten-02}
                 \end{figure}
@@ -183,10 +188,10 @@
                 ここに，実際に自分のアカウント情報を入力し，「ログイン」ボタンを押す．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-03.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-03.png}
                     \caption{検索結果の画面から楽天の複製サイトへ侵入した際の画面}
                     \label{rakuten-03}
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-04.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-04.png}
                     \caption{ログイン画面へ入り，登録情報を入力した際の画面}
                     \label{rakuten-04}
                 \end{figure}
@@ -196,7 +201,7 @@
                 ここまでの動作は図\ref{flow-6-7}に準じて処理されており，目立った警告や画像切れ無く且つ正規サーバとの通信を中継する形で個人アカウントへのログインに成功した．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/rakuten/rakuten-05.png}
+                    \includegraphics[width=8cm]{img/rakuten/rakuten-05.png}
                     \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
                     \label{rakuten-05}
                 \end{figure}
@@ -236,10 +241,10 @@
                 続いて，ログインを行う為に画面右上にあるログインボタンを押して個人アカウントへの侵入に試みた（図\ref{amazon-01}）．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/amazon/amazon-00.png}
+                    \includegraphics[width=8cm]{img/amazon/amazon-00.png}
                     \caption{「Amazon通販」と検索した際の画面}
                     \label{amazon-00}
-                    \includegraphics[width=6cm]{img/amazon/amazon-01.png}
+                    \includegraphics[width=8cm]{img/amazon/amazon-01.png}
                     \caption{検索結果の画面からAmazonの複製サイトへ遷移した際の画面}
                     \label{amazon-01}
                 \end{figure}
@@ -253,10 +258,10 @@
                 ここまでの動作は図\ref{flow-6-7}の動作に従って処理されており，楽天と同様に目立った画像切れや警告を出さずに，且つ正規サーバとの通信を攻撃者が中継する形で個人アカウントに侵入することができた．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/amazon/amazon-02.png}
+                    \includegraphics[width=8cm]{img/amazon/amazon-02.png}
                     \caption{ログイン画面へ入り，登録情報を入力した際の画面}
                     \label{amazon-02}
-                    \includegraphics[width=6cm]{img/amazon/amazon-03.png}
+                    \includegraphics[width=8cm]{img/amazon/amazon-03.png}
                     \caption{ログイン情報の整合が取れ，実際に個人アカウントへログインした後の画面}
                     \label{amazon-03}
                 \end{figure}
@@ -266,7 +271,7 @@
                 今回の実装では，CAPTCHAを回避或いはCAPTCHAの文字列を被害者に入力させて突破させる事はできなかった．\
                 \begin{figure}[h]
                     \centering
-                    \includegraphics[width=6cm]{img/captcha.png}
+                    \includegraphics[width=8cm]{img/captcha.png}
                     \caption{CAPTCHAの例：AWSコンソールにログインする際に実際に出るCAPTCHAの一例}
                     \label{captcha}
                 \end{figure}
